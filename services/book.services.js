@@ -1,13 +1,10 @@
 const repo = require("../repo/bookRepo")
 const getAllBooks =async()=>{
-    const books =await repo.getAllBooks();
-    return books
+    return await repo.getAllBooks();
 }
 
-
 const createBook =async (book) =>{
-    const newBook = await repo.createBook(book);
-    return newBook
+    return await repo.createBook(book);
 }
 
 const deleteBook = async (id) =>{

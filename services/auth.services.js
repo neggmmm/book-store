@@ -1,8 +1,8 @@
 const repo = require("../repo/userRepo")
-const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {MY_SECRET_KEY} = require("../config/envConfig")
-console.log(MY_SECRET_KEY)
+const generateToken = require("../utils/generateToken")
+const { hashPassword, comparePassword} = require("../utils/hashPassword")
 const login =async (userData)=>{
     try{
         if(!userData.email || !userData.password){
@@ -14,7 +14,7 @@ const login =async (userData)=>{
         throw new Error("Invalid Email or password")
     }
 
-    const isValidpassword = await bcrypt.compare(userData.password,user.password);
+    const isValidpassword =await comparePassword(user.password,userData.password)
     if(!isValidpassword){
         throw new Error("Invalid Email or password ")
     }
@@ -29,14 +29,11 @@ const login =async (userData)=>{
 
 const register = async(userData)=>{
     try{
-        if(!userData.username || !userData.email || !userData.password){
-        throw Error("all fields are required!")
-    }
     const user = await repo.getUserByEmail(userData.email);
     if(user){
         throw new Error("Cannot create a new account!")
     }
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const hashedPassword =await hashPassword(userData.password)
     const newUser = await repo.createUser({...userData,password:hashedPassword});
 
     const {password, ...userWithoutPassword} = newUser.toObject();
@@ -47,17 +44,6 @@ const register = async(userData)=>{
     }
 }
 
-const generateToken = (userData) =>{
-   return jwt.sign({
-        userId: userData._id,     
-        username: userData.username,
-        email: userData.email,
-        role: userData.role
-        },
-        MY_SECRET_KEY,
-        {expiresIn:"3h"}
-    )
-}
 const verifyToken = (token) =>{
     return jwt.verify(token,MY_SECRET_KEY)
 }
