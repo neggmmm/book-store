@@ -5,7 +5,7 @@ const {adminAuth} = require("../middleware/adminAuth")
 const {requiredAuth} = require("../middleware/requiredAuth")
 const createBookValidator = require("../validators/bookValidator");
 
-router.get("/",adminAuth,controller.getAllBooks)
+router.get("/",controller.getAllBooks)
 
 router.post("/",createBookValidator,requiredAuth,controller.createBook)
 

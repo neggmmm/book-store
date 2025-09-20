@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LockOutline } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, Link, Paper, TextField, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,26 +11,20 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+     const res = await axios.post("http://localhost:8000/auth/login", {
+        email,
+        password,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || "Login failed");
-        return;
-      }
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.username);
       navigate("/");
     } catch (err) {
       console.error(err);
       alert("Something went wrong");
     }
   };
-  
+
   return (
     <Container maxWidth="xs">
       <Paper elevation={10} sx={{ marginTop: 8, padding: 2 }}>

@@ -24,7 +24,7 @@ mongoose.connect(DB_URI).then(() => console.log("DB Connected"));
 
 app.use("/auth",authRoute)
 app.use("/users",userRoute)
-app.use("/book",bookRoute)
+app.use("/books",bookRoute)
 
 app.listen(PORT,()=>{
     console.log(`Server running on http://localhost:${PORT}`)

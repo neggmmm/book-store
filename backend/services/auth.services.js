@@ -19,7 +19,7 @@ const login =async (userData)=>{
     }
 
     const token = generateToken(user)
-    return {token: `Bearer ${token}`}
+    return {token: `Bearer ${token}`,username:user.username}
 
     }catch(err){
         return {error:err.message}
