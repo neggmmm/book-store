@@ -20,7 +20,19 @@ const createBook = async(req,res)=>{
        return res.status(401).send({error:err})
     }
 }
-
+const searchBook = async(req,res)=>{
+    try{
+        const {text} = req.query;
+        if(!text) {
+            res.status(201).send(await services.getAllBooks())
+        }
+        const books = await services.searchBook(text);
+        console.log(books)
+        res.status(201).send(books)
+    }catch(err){
+        res.status(401).send({error:err.message})
+    }
+}
 const deleteBook = async(req,res)=>{
     try{
         const book = await services.deleteBook(req.params.id);
@@ -32,6 +44,7 @@ const deleteBook = async(req,res)=>{
 module.exports = {
     getAllBooks,
     createBook,
-    deleteBook
+    deleteBook,
+    searchBook
 
 }

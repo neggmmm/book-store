@@ -11,4 +11,6 @@ router.post("/",createBookValidator,controller.createBook)
 
 router.delete("/:id",adminAuth,controller.deleteBook)
 
+router.get("/search",controller.searchBook)
+
 module.exports = router

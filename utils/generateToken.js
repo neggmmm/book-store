@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const {MY_SECRET_KEY} = require("../config/envConfig")
 const generateToken = (userData) =>{
    return jwt.sign({
         userId: userData._id,     
@@ -12,6 +12,10 @@ const generateToken = (userData) =>{
     )
 }
 
+const verifyToken = (token) =>{
+    return jwt.verify(token,MY_SECRET_KEY)
+}
 module.exports = {
-    generateToken
+    generateToken,
+    verifyToken
 }

@@ -1,4 +1,4 @@
-const {verifyToken} = require ("../services/auth.services")
+const {verifyToken} = require ("../utils/generateToken")
 const requiredAuth = async (req,res,next) =>{
     const authHeader = req.headers.authorization;
     if(!authHeader){

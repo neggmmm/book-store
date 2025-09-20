@@ -13,10 +13,18 @@ const createBook = async (book) =>{
     return await newBook.save()
 }
 
+const searchBook = async (text) =>await BookModel.find({
+  $or: [
+    { name: new RegExp(text, "i") },  
+    { author: new RegExp(text, "i") }
+  ]
+});
+
 const deleteBook = async (id) => await BookModel.findByIdAndDelete(id);
 
 module.exports = {
     getAllBooks,
     createBook,
-    deleteBook
+    deleteBook,
+    searchBook
 }

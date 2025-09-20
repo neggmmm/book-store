@@ -1,7 +1,6 @@
 const repo = require("../repo/userRepo")
 const jwt = require("jsonwebtoken")
-const {MY_SECRET_KEY} = require("../config/envConfig")
-const generateToken = require("../utils/generateToken")
+const {generateToken} = require("../utils/generateToken")
 const { hashPassword, comparePassword} = require("../utils/hashPassword")
 const login =async (userData)=>{
     try{
@@ -14,7 +13,7 @@ const login =async (userData)=>{
         throw new Error("Invalid Email or password")
     }
 
-    const isValidpassword =await comparePassword(user.password,userData.password)
+    const isValidpassword =await comparePassword(userData.password,user.password)
     if(!isValidpassword){
         throw new Error("Invalid Email or password ")
     }
@@ -44,11 +43,8 @@ const register = async(userData)=>{
     }
 }
 
-const verifyToken = (token) =>{
-    return jwt.verify(token,MY_SECRET_KEY)
-}
+
 module.exports = {
     login,
-    register,
-    verifyToken
+    register
 }

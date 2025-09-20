@@ -1,5 +1,5 @@
 
-const {verifyToken} = require ("../services/auth.services")
+const {verifyToken} = require ("../utils/generateToken")
 
 const adminAuth = async (req,res,next) =>{
     try{

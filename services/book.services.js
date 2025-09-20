@@ -6,11 +6,15 @@ const getAllBooks =async()=>{
 const createBook =async (book) =>{
     return await repo.createBook(book);
 }
+const searchBook = async(text)=>{
+    return await repo.searchBook(text)
+}
 
 const deleteBook = async (id) =>{
     return await repo.deleteBook(id);
 }
 module.exports ={getAllBooks,
     createBook,
-    deleteBook
+    deleteBook,
+    searchBook
 }
