@@ -11,7 +11,7 @@ const {PORT, DB_URI} = require("./config/envConfig")
 const app = express()
 
 app.use(helmet());
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 
 
