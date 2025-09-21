@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import { Container, Grid, Card, CardContent, Typography } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 export default function Home() {
     const [books,setBooks] = useState([]);
+    const navigate = useNavigate();
     useEffect(()=>{
         const fetchBooks = async () =>{
             try{
@@ -14,6 +16,10 @@ export default function Home() {
         };
         fetchBooks()
     },[])
+
+    const handleCard = (id) =>{
+      navigate(`/books/${id}`)
+    }
     return (
     
      <Container>
@@ -21,18 +27,24 @@ export default function Home() {
         All Books
       </Typography>
       <Grid container spacing={2}>
-        {books.map((book) => (
-          <Grid item xs={12} sm={6} md={4} key={book._id}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">{book.name}</Typography>
-                <Typography variant="body2">Author: {book.author}</Typography>
-                <Typography variant="body2">Price: ${book.price}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+  {books.map((book) => (
+    <Grid onClick={()=>handleCard(book._id)} item xs={12} sm={6} md={4} key={book._id}>
+      <Card sx={{ height: "100%" }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            {book.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Author: {book.genre}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Price: ${book.price}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
     </Container>
   )
 }

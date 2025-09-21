@@ -6,6 +6,9 @@ const getAllBooks =async()=>{
 const createBook =async (book) =>{
     return await repo.createBook(book);
 }
+const getBookById= async(id) =>{
+    return await repo.getBookById(id)
+}
 const updateBook = async(id,updated) =>{
     const book = await repo.getBookById(id);
     if(!book){
@@ -29,5 +32,6 @@ module.exports ={getAllBooks,
     deleteBook,
     updateBook,
     searchBook,
-    filterBook
+    filterBook,
+    getBookById
 }

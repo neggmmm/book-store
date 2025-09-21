@@ -25,9 +25,9 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Link to="/" component={RouterLink} color="inherit" variant="h6" sx={{ flexGrow: 1,textDecoration:"none" }}>
             BOOK STORE
-          </Typography>
+          </Link>
           {!username?(
             <>
             <Link component={RouterLink} color="inherit" to="/register" sx={{marginRight:2,textDecoration:"none"}}>
@@ -39,7 +39,7 @@ export default function Navbar() {
             </>
           ):(
             <>
-             <Typography sx={{ marginRight: 2 }}>{username}</Typography>
+             <Button color="inherit" onClick={() => navigate("/me")} sx={{ marginRight: 2 }}>{username}</Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>

@@ -10,7 +10,7 @@ const requiredAuth = async (req, res, next) => {
 
   try {
     const decoded = await verifyToken(token);
-    req.user = decoded;  // now contains { userId, username, email, role }
+    req.user = decoded; 
     next();
   } catch (err) {
     res.status(401).send({ error: err.message });

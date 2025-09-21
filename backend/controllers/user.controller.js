@@ -12,7 +12,7 @@ const getAllUsers = async(req,res)=>{
 const getUserById = async(req,res)=>{
    try {
     const user = await services.getUserById(req.params.id);
-    res.send(user);
+    res.send({username:user.username,id:user.id,email:user.email});
   } catch (err) {
     res.status(500).send({ error: err.message });
   }

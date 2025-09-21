@@ -18,6 +18,7 @@ export default function Login() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);
+      localStorage.setItem("id", res.data.id); 
       navigate("/");
     } catch (err) {
       console.error(err);

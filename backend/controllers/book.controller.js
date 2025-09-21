@@ -5,10 +5,18 @@ const getAllBooks = async(req,res)=>{
         const books = await services.getAllBooks();
         res.status(201).send(books)
     }catch(err){
-       return res.status(401).send({error:err})
+       return res.status(401).send({error:err.message})
     }
 }
-
+const getBookById = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const book = await services.getBookById(id)
+        res.status(201).send(book)
+    }catch(err){
+        return res.status(401).send({error:err.message})
+    }
+}
 const createBook = async(req,res)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
@@ -69,5 +77,6 @@ module.exports = {
     deleteBook,
     updateBook,
     searchBook,
-    filterBook
+    filterBook,
+    getBookById
 }

@@ -16,7 +16,6 @@ export default function Signup() {
         password,
       });
       localStorage.setItem("token", res.data.token);
-      alert("Signup successful!");
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.error || "Something went wrong");
