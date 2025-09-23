@@ -46,8 +46,16 @@ export default function Home() {
         {books.map((book) => (
           <Col xs={12} sm={6} md={4} key={book._id}>
             <Card className="h-100" onClick={() => handleDetails(book._id)} style={{ cursor: 'pointer' }}>
-              {book.bookCoverImage && (
-                <Card.Img variant="top" src={`http://localhost:8000/uploads/${book.bookCoverImage}`} alt={book.title} />
+            {book.bookCoverImage && (
+                <Card.Img
+                  variant="top"
+                  src={
+                    book.bookCoverImage.startsWith("http")
+                      ? book.bookCoverImage
+                      : `http://localhost:8000/uploads/${book.bookCoverImage}`
+                  }
+                  alt={book.title}
+                />
               )}
               <Card.Body>
                 <Card.Title className="mb-2">{book.title}</Card.Title>

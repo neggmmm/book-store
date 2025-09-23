@@ -36,7 +36,7 @@ export default function CreateBook() {
       await axios.post("http://localhost:8000/books", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: token,
+          Authorization: token && token.startsWith("Bearer ") ? token : `Bearer ${token || ""}`,
         },
       });
       alert("Book created successfully!");

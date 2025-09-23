@@ -23,7 +23,7 @@ const createBook = async (req, res) => {
     return res.status(400).send({ errors: errors.array() });
   }
 
-  if (!req.file) {
+  if (!req.file && !req.body.bookCoverImage) {
     return res.status(400).send({ error: "Book cover is required" });
   }
 
@@ -31,7 +31,7 @@ const createBook = async (req, res) => {
     const bookData = {
       ...req.body,
       createdBy: req.user.userId,
-      bookCoverImage: req.file.filename,
+      bookCoverImage: req.file? req.file.filename : req.body.bookCoverImage,
     };
 
     const book = await services.createBook(bookData);

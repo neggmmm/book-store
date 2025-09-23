@@ -29,7 +29,7 @@ export default function Navbar() {
           <Link to="/" component={RouterLink} color="inherit" variant="h6" sx={{ flexGrow: 1,textDecoration:"none" }}>
             BOOK STORE
           </Link>
-          <Button color='inherit' onClick={()=>navigate("/add")}>Create book</Button>
+          
           {!username?(
             <>
             <Link component={RouterLink} color="inherit" to="/register" sx={{marginRight:2,textDecoration:"none"}}>
@@ -41,6 +41,7 @@ export default function Navbar() {
             </>
           ):(
             <>
+            <Button color='inherit' onClick={()=>navigate("/add")}>Create book</Button>
              <Button color="inherit" onClick={() => navigate("/me")} sx={{ marginRight: 2 }}>{username}</Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
