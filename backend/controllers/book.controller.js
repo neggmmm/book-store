@@ -17,22 +17,29 @@ const getBookById = async(req,res)=>{
         return res.status(401).send({error:err.message})
     }
 }
-const createBook = async(req,res)=>{
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).send({errors:errors.array()})
-    } 
-    try{
-        console.log(req)
-         const bookData = {...req.body,createdBy:req.user.userId};
-        
-        const book = await services.createBook(bookData);
-        res.status(201).send(book)
+const createBook = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).send({ errors: errors.array() });
+  }
 
-    }catch(err){
-       return res.status(401).send({error:err.message})
-    }
-}
+  if (!req.file) {
+    return res.status(400).send({ error: "Book cover is required" });
+  }
+
+  try {
+    const bookData = {
+      ...req.body,
+      createdBy: req.user.userId,
+      bookCoverImage: req.file.filename,
+    };
+
+    const book = await services.createBook(bookData);
+    res.status(201).send(book);
+  } catch (err) {
+    return res.status(500).send({ error: err.message });
+  }
+};
 const searchBook = async(req,res)=>{
     try{
         const {text} = req.query;

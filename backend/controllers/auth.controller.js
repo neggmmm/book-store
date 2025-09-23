@@ -6,9 +6,12 @@ const login = async(req,res)=>{
     if(!errors.isEmpty()) return res.status(400).send({errors:errors.array()})
     try{
         const result = await services.login(req.body);
-        res.status(201).send(result)
+        if(result && result.error){
+            return res.status(401).send({error: result.error})
+        }
+        res.status(200).send(result)
     }catch(err){
-       return res.status(401).send({error:err.message})
+       return res.status(500).send({error:err.message})
     }
 }
 

@@ -4,10 +4,11 @@ const controller = require("../controllers/book.controller")
 const {requiredAuth} = require("../middleware/requiredAuth")
 const createBookValidator = require("../validators/bookValidator");
 const { adminAuthOrOwner } = require("../middleware/adminAuthOrOwner");
+const upload = require("../middleware/upload.middleware");
 
 router.get("/",controller.getAllBooks)
 router.get("/:id",controller.getBookById)
-router.post("/",createBookValidator,requiredAuth,controller.createBook)
+router.post("/",requiredAuth,upload.single("bookCoverImage"),createBookValidator,controller.createBook)
 
 router.delete("/:id",adminAuthOrOwner,controller.deleteBook)
 router.put("/:id",adminAuthOrOwner,controller.updateBook)

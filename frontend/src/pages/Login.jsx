@@ -15,14 +15,17 @@ export default function Login() {
         email,
         password,
       });
-      console.log(res)
+      if(res.data && res.data.error){
+        alert(res.data.error);
+        return;
+      }
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("id", res.data.id); 
       navigate("/");
     } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
+      const msg = err?.response?.data?.error || "Invalid email or password";
+      alert(msg);
     }
   };
 
