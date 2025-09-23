@@ -15,30 +15,28 @@ const createBook = async (book) =>{
     return await newBook.save()
 }
 
-const searchBook = async (text) =>await BookModel.find({
+const searchBook = async (text) => await BookModel.find({
   $or: [
-    { name: new RegExp(text, "i") },  
-    { author: new RegExp(text, "i") }
+    { title: new RegExp(text, "i") },
+    { genre: new RegExp(text, "i") },
+    { description: new RegExp(text, "i") }
   ]
 });
 
-const filterBook = async(filter) => {
+const filterBook = async (filter) => {
   let query = {};
 
-  if(filter.category){
-    query.category = new RegExp(filter.category, "i")
+  if (filter.genre) {
+    query.genre = new RegExp(filter.genre, "i")
   }
-  if(filter.author){
-    query.author = new RegExp(filter.author, "i")
-  }
-  if(filter.minPrice || filter.maxPrice){
+  if (filter.minPrice || filter.maxPrice) {
     query.price = {}
-    if(filter.minPrice) query.price.$gte = Number(filter.minPrice)
-    if(filter.maxPrice) query.price.$lte = Number(filter.maxPrice)
+    if (filter.minPrice) query.price.$gte = Number(filter.minPrice)
+    if (filter.maxPrice) query.price.$lte = Number(filter.maxPrice)
   }
 
-   return await BookModel.find(query);
-} 
+  return await BookModel.find(query);
+}
 
 const deleteBook = async (id) => await BookModel.findByIdAndDelete(id);
 

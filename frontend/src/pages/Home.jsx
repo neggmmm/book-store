@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
-import { Container, Grid, Card, CardContent, Typography } from "@mui/material";
+import { Container, Grid, Card, CardContent, Typography, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 export default function Home() {
     const [books,setBooks] = useState([]);
@@ -16,7 +16,22 @@ export default function Home() {
         };
         fetchBooks()
     },[])
-
+    const handleDelete =async(id) =>{
+      try{
+        const token = localStorage.getItem("token");
+        console.log(token)
+        await axios.delete(`http://localhost:8000/books/${id}`,{
+          headers: {
+          Authorization: token,
+          },
+        })
+      const filtered = books.filter((book) => book._id !== id);
+      console.log(filtered)
+      setBooks(filtered);
+      }catch(err){
+      console.error(err)
+    }
+  }
     const handleCard = (id) =>{
       navigate(`/books/${id}`)
     }
@@ -40,6 +55,10 @@ export default function Home() {
           <Typography variant="body2" color="text.secondary">
             Price: ${book.price}
           </Typography>
+          <Button  onClick={(e) => {
+                    e.stopPropagation(); // stops card click event
+                    handleDelete(book._id);
+                  }}>Delete</Button>
         </CardContent>
       </Card>
     </Grid>

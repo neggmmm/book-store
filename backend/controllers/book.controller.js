@@ -64,11 +64,16 @@ const filterBook = async (req, res) => {
   }
 };
 const deleteBook = async(req,res)=>{
+    console.log(req.params.id)
     try{
+        
         const book = await services.deleteBook(req.params.id);
-        res.status(201).send(book)
+        if(!book){
+            return res.status(404).send({error:"Book not found"})
+        }
+        res.status(200).send(book)
     }catch(err){
-        return res.status(401).send({error:err})
+        return res.status(500).send({error:err.message})
     }
 }
 module.exports = {

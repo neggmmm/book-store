@@ -7,19 +7,17 @@ const login =async (userData)=>{
         if(!userData.email || !userData.password){
         throw new Error("Email & password are required")
     }
-
     const user = await repo.getUserByEmail(userData.email);
     if(!user){
         throw new Error("Invalid Email or password")
     }
-
     const isValidpassword =await comparePassword(userData.password,user.password)
     if(!isValidpassword){
         throw new Error("Invalid Email or password ")
     }
 
     const token = generateToken(user)
-    return {token: `Bearer ${token}`,username:user.username}
+    return {token: `Bearer ${token}`,username:user.username,id:user._id}
 
     }catch(err){
         return {error:err.message}

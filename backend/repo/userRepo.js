@@ -16,7 +16,7 @@ const createUser = async (user) =>{
     const userModel = new UserModel({
         email: user.email,
         password: user.password,
-        username: user.username
+        username: user.username,
     })
    
     return await userModel.save()
