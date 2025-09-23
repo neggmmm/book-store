@@ -27,7 +27,7 @@ export default function CreateBook() {
       formData.append(key, value);
     });
     if (file) {
-      formData.append("bookCoverImage", file); // must match backend multer field
+      formData.append("bookCoverImage", file); 
     }
 
     const token = localStorage.getItem("token");

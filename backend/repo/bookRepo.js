@@ -8,7 +8,7 @@ const getBookById = async(id)=>{
 }
 
 const updateBook = async(id,updated) =>{
-  return await BookModel.findByIdAndUpdate(id,updated)
+  return await BookModel.findByIdAndUpdate(id, updated, { new: true, runValidators: true })
 }
 const createBook = async (book) =>{
     const newBook = new BookModel (book)

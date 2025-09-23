@@ -3,18 +3,21 @@ const {validationResult } = require('express-validator');
 const getAllBooks = async(req,res)=>{
     try{
         const books = await services.getAllBooks();
-        res.status(201).send(books)
+        res.status(200).send(books)
     }catch(err){
-       return res.status(401).send({error:err.message})
+       return res.status(500).send({error:err.message})
     }
 }
 const getBookById = async(req,res)=>{
     try{
         const id = req.params.id;
         const book = await services.getBookById(id)
-        res.status(201).send(book)
+        if(!book){
+          return res.status(404).send({error:"Book not found"})
+        }
+        res.status(200).send(book)
     }catch(err){
-        return res.status(401).send({error:err.message})
+        return res.status(500).send({error:err.message})
     }
 }
 const createBook = async (req, res) => {
@@ -44,22 +47,29 @@ const searchBook = async(req,res)=>{
     try{
         const {text} = req.query;
         if(!text) {
-            res.status(201).send(await services.getAllBooks())
+            const all = await services.getAllBooks();
+            return res.status(200).send(all)
         }
         const books = await services.searchBook(text);
-        res.status(201).send(books)
+        res.status(200).send(books)
     }catch(err){
-        res.status(401).send({error:err.message})
+        res.status(500).send({error:err.message})
     }
 }
 const updateBook = async(req,res)=>{
     try{
-        const updated = await services.updateBook(req.params.id,req.body)
-        res.status(201).send(updated)
+        const updatePayload = { ...req.body };
+        if (req.file) {
+          updatePayload.bookCoverImage = req.file.filename;
+        }
+        const updated = await services.updateBook(req.params.id, updatePayload)
+        if(!updated){
+          return res.status(404).send({error:"Book not found"})
+        }
+        res.status(200).send(updated)
     }catch(err){
-        res.status(400).send({error:err.message})
+        res.status(500).send({error:err.message})
     }
-    
 }
 const filterBook = async (req, res) => {
   try {

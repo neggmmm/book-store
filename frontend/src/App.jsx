@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup"; 
 import Home from "./pages/Home";
+import EditBook from "./pages/EditBook";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import BookDetails from "./pages/BookDetails";
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/register" element={<Signup />} />
         <Route path="/me" element={<Profile />}/>
         <Route path="/books/:id" element={<BookDetails />} />
+        <Route path="/books/:id/edit" element={<EditBook />} />
       </Routes>
     </BrowserRouter>
   );
